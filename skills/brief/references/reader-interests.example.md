@@ -5,9 +5,11 @@ What this reader keeps leaning into. Read before gathering material; weight know
 Format: `keyword / theme — tally — source — last seen (YYYY-MM-DD)`. More tallies means surface it higher. Source is how the interest was earned: `in-run`, `forward`, `reply`, `saved`, `reaction`, or `pasted`. Stronger sources (forward > saved > reaction) can outweigh a higher tally of weak ones. Let stale, low-tally interests decay.
 
 <!--
-This is the cold-start TEMPLATE. On first run the skill copies it to
-`reader-interests.md`, which is where real signals accumulate. That working file
-is git-ignored: it is local to each install, never committed, never shared.
+This is the cold-start TEMPLATE, and the only version that ships.
+On first run the skill copies it to the persistent plugin data directory,
+${CLAUDE_PLUGIN_DATA}/reader-interests.md, where real signals accumulate.
+That location survives plugin updates and sits outside the repo entirely,
+so it is never committed or shared.
 Example row (for format reference only):
   - agent orchestration & harnesses — 2 — in-run — 2026-07-28
 -->

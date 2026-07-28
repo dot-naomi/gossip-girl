@@ -98,13 +98,15 @@ Ask it to use a source you invent that does not exist:
 2. Reply "more of this" to one item, or ask a follow-up about it.
 3. Run again on a related topic. The second briefing should lean toward that theme.
 
-Confirm the memory changed. When loaded via `--plugin-dir ./gossip-girl`, the working file is created inside the plugin:
+Confirm the memory changed:
 
 ```bash
-cat ./gossip-girl/skills/brief/references/reader-interests.md
+cat ~/.claude/plugins/data/gossip-girl-ladybug-plugins/reader-interests.md
 ```
 
-(An installed-from-marketplace plugin keeps this file under its install path instead. Either way it is git-ignored and local.) The theme you engaged with should have a bumped tally. **Pass:** only themes you actually reacted to change; it does not invent interests off what it happened to surface.
+That is the persistent plugin data directory, which survives updates. Nothing should be written into the versioned plugin cache under `~/.claude/plugins/cache/`. (When the skill is run standalone rather than as an installed plugin, it falls back to `references/reader-interests.md` next to `SKILL.md`.)
+
+The theme you engaged with should have a bumped tally. **Pass:** only themes you actually reacted to change; it does not invent interests off what it happened to surface.
 
 ### Other-channel ingestion (opt-in)
 

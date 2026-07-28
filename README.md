@@ -60,10 +60,12 @@ gossip-girl/
 │       ├── SKILL.md                   workflow, triangulation, format, style rules
 │       └── references/
 │           ├── voice.md               calibrated example lines that keep the tone consistent
-│           └── reader-interests.example.md   cold-start template for the personalization memory
+│           └── reader-interests.example.md   cold-start template; the live memory is written
+│                                             to the persistent plugin data directory, not here
 ├── examples/
 │   └── this-week-in-ai-agents.md      a real triangulated run, with the sourcing notes kept in
-└── .gitignore                         excludes the per-install personal memory (reader-interests.md)
+└── .gitignore                         belt-and-braces: ignores reader-interests.md if a
+                                       standalone run ever writes one into the repo
 ```
 
 The invocation name comes from the layout: plugin `gossip-girl` + skill folder `brief` = `/gossip-girl:brief`.
@@ -115,16 +117,22 @@ Restart any open Claude Code session, or run `/reload-plugins`, after installing
 
 ## Personalization (optional)
 
-The plugin keeps a memory of the themes you keep engaging with, at `skills/brief/references/reader-interests.md`, and weights future briefings toward them. It updates only from clear signals, and records topics only, never personal content.
+The plugin keeps a memory of the themes you keep engaging with and weights future briefings toward them. It updates only from clear signals, and records topics only, never personal content.
 
-**Your interests stay on your machine.** The repo ships only `reader-interests.example.md`, an empty cold-start template. On first run the plugin copies it to `reader-interests.md`, where your signals accumulate locally. That working file is git-ignored, so it is never committed or shared. Nothing syncs to other installs or back to the author, and a fresh install starts blank.
+That memory lives at:
+
+```
+~/.claude/plugins/data/gossip-girl-ladybug-plugins/reader-interests.md
+```
+
+**Your interests stay on your machine, and survive updates.** The repo ships only an empty cold-start template. On first run the plugin copies it into the persistent plugin data directory above, which is deliberately outside the versioned plugin cache, so upgrading or reinstalling the plugin does not wipe what it has learned. Nothing syncs to other installs or back to the author, and a fresh install starts blank.
 
 How it learns:
 
 - **In-conversation:** ask a follow-up, say "more of this," or click into an item, and that theme's tally goes up.
 - **Other channels (opt-in):** ask it to fold in what you forward, reply to, save, or react to (Gmail, Slack, bookmarks). This runs only when you request it, reads only the channels you name, stays read-only, and reports back what it recorded so you can veto it. Connectors must already be authorized; it will not work around auth.
 
-To wipe the memory and start over, delete `reader-interests.md`. The plugin recreates it from the template on the next run.
+To wipe the memory and start fresh, delete the file at the path above; the plugin recreates it from the template on the next run. Uninstalling removes the data directory too, unless you pass `/plugin uninstall gossip-girl --keep-data`.
 
 Sources for triangulation deliberately span primary/official pages, financial press (Yahoo Finance, Bloomberg, TechCrunch, The Information) for money stories, and independent tech-media newsletters (Platformer, Newcomer, Stratechery, Import AI, The Batch, Axios Pro Rata) for framing.
 
@@ -138,7 +146,7 @@ The voice and the sourcing rules are both editable in place:
 
 - **Retune the voice:** edit `skills/brief/references/voice.md`, which holds the calibrated example lines the plugin studies before writing. Swap the Gossip Girl register for another and the machinery still works.
 - **Change the sourcing:** the triangulation protocol and the named outlet list live in `skills/brief/SKILL.md`.
-- **Before redistributing a fork,** confirm `reader-interests.md` is absent or blank so you are not shipping your own interest profile. It is git-ignored by default, so this normally takes care of itself.
+- **Redistributing a fork is safe by default.** The live memory is written to the plugin data directory outside the repo, and a stray `reader-interests.md` in the repo is git-ignored, so your own interest profile is not something you can ship by accident.
 
 ## License
 

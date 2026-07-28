@@ -22,7 +22,11 @@ Turn a topic or a pile of recent technical developments into a briefing a busy t
 
 ### Step 1 — Load what this reader cares about
 
-Read `references/reader-interests.md` first. If that file does not exist (a fresh install), create it by copying `references/reader-interests.example.md`, the cold-start template, and proceed as a cold start. The working file is git-ignored on purpose: it is personal, local to this install, and never committed or shared. The template is what ships.
+Read `${CLAUDE_PLUGIN_DATA}/reader-interests.md` first. If that file does not exist (a fresh install), create it by copying the cold-start template from `${CLAUDE_PLUGIN_ROOT}/skills/brief/references/reader-interests.example.md`, then proceed as a cold start.
+
+That location is deliberate. `${CLAUDE_PLUGIN_DATA}` is the persistent per-plugin directory that survives plugin updates and reinstalls. Never write this file into the plugin's own directory: that path is version-pinned and gets cleaned up on update, which would silently erase everything the reader has taught this skill.
+
+**Fallback:** if the path above still contains a literal `${CLAUDE_PLUGIN_DATA}` (the skill was copied into `~/.claude/skills/` standalone rather than installed as a plugin, so the placeholder did not resolve), use `references/reader-interests.md` next to this file instead, seeding it from `references/reader-interests.example.md` the same way.
 
 The file holds the keywords and themes this reader has leaned into on past runs (the topics they asked follow-ups on, said "more of this," or clicked through to). Use it to bias two things: which developments you surface, and the order you rank them. Known-interest items lead; everything else earns its place. If it has no signals yet, treat this as a cold start and skip the weighting.
 
@@ -96,7 +100,7 @@ Rules for the format:
 Two upkeep steps, both quick:
 
 1. **Refresh the voice.** If you wrote lines you are proud of that capture the register well, add 1–2 of them to `references/voice.md` (keep the file to a tight 4–6 examples total, trimming weaker ones) so future runs stay consistent in tone.
-2. **Update reader interests.** Watch how the reader reacts to this briefing. When they ask a follow-up, say "more of this," dwell on, or click through to a particular item, that item's topic is a signal. Add the keywords (companies, technologies, themes) to `references/reader-interests.md` with a light tally, and let anything they explicitly wave off fade. This is how the briefings get more targeted over time. Only record clear signals; do not invent interests the reader never showed.
+2. **Update reader interests.** Watch how the reader reacts to this briefing. When they ask a follow-up, say "more of this," dwell on, or click through to a particular item, that item's topic is a signal. Add the keywords (companies, technologies, themes) to the working file you loaded in Step 1 (`${CLAUDE_PLUGIN_DATA}/reader-interests.md`) with a light tally, and let anything they explicitly wave off fade. This is how the briefings get more targeted over time. Only record clear signals; do not invent interests the reader never showed.
 
 ## Learning from other channels (optional signal ingestion)
 
@@ -114,7 +118,7 @@ In-run reactions are one signal. The stronger signal is what the reader does wit
 1. **Pick the source.** If a relevant connector is authorized (Gmail, Slack, a browser tool), use it read-only and scoped to what the reader named. If nothing is connected, ask the reader to paste or export the items. Do not reach into channels the reader did not point you at, and do not compile a profile across sources beyond what they asked for.
 2. **Extract keywords, not content.** Pull the companies, technologies, people, and themes each item is about. You are building a topic tally, not archiving their inbox. Ignore anything that is not about tech.
 3. **Weight by signal strength**, using the source order above. A forward counts more than a reaction.
-4. **Write to `references/reader-interests.md`** in the same tally format, tagging the source (e.g. `— forward` / `— saved`) so later runs know how the interest was earned and can decay stale ones.
+4. **Write to `${CLAUDE_PLUGIN_DATA}/reader-interests.md`** (the same working file from Step 1) in the same tally format, tagging the source (e.g. `— forward` / `— saved`) so later runs know how the interest was earned and can decay stale ones.
 5. **Report what you learned** back to the reader in one line ("Bumped agent-orchestration and eval tooling; those keep showing up in what you forward"), so the learning is visible and correctable, never a black box.
 
 **Guardrails (these hold even when the reader asks):** read-only, only the channels the reader names, only authorized connectors (never ask for passwords or tokens to reach one), keep signals topical not personal, and let the reader see and veto what got recorded. If a connector needs authorization, say so and stop; do not work around it.
