@@ -100,7 +100,9 @@ Rules for the format:
 Two upkeep steps, both quick:
 
 1. **Refresh the voice.** If you wrote lines you are proud of that capture the register well, add 1–2 of them to `references/voice.md` (keep the file to a tight 4–6 examples total, trimming weaker ones) so future runs stay consistent in tone.
-2. **Update reader interests.** Watch how the reader reacts to this briefing. When they ask a follow-up, say "more of this," dwell on, or click through to a particular item, that item's topic is a signal. Add the keywords (companies, technologies, themes) to the working file you loaded in Step 1 (`${CLAUDE_PLUGIN_DATA}/reader-interests.md`) with a light tally, and let anything they explicitly wave off fade. This is how the briefings get more targeted over time. Only record clear signals; do not invent interests the reader never showed.
+2. **Update reader interests.** Watch how the reader reacts to this briefing. When they ask a follow-up, say "more of this," dwell on, or click through to a particular item, that item's topic is a signal. Record it in the working file you loaded in Step 1 (`${CLAUDE_PLUGIN_DATA}/reader-interests.md`), and let anything they explicitly wave off fade. This is how the briefings get more targeted over time. Only record clear signals; do not invent interests the reader never showed.
+
+   **One row per theme. Never append a duplicate.** Before writing, read the existing rows and check whether the theme is already there, including near-matches worded differently ("MCP / tool-calling standards" and "MCP spec changes" are the same theme). If it exists, **edit that row in place**: increment its tally by one and update its date. Only add a new row for a genuinely new theme. Two rows naming the same theme with different tallies is a bug, not a history: the file is a current-state tally, not an append-only log. If you find existing duplicates, merge them into one row carrying the highest tally as you write.
 
 ## Learning from other channels (optional signal ingestion)
 
