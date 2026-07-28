@@ -1,0 +1,8 @@
+{
+  "name": "gossip-girl",
+  "description": "Turns technical news into decision-ready briefings in the voice of the Gossip Girl narrator, without sacrificing accuracy.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Naomi"
+  }
+}

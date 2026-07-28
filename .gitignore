@@ -1,0 +1,7 @@
+# Personal, per-install memory. Accumulates local signals; never share it.
+# The skill seeds this from reader-interests.example.md on first run.
+reader-interests.md
+
+# OS / editor noise
+.DS_Store
+*.swp
