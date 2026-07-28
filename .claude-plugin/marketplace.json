@@ -1,5 +1,6 @@
 {
   "name": "ladybug-plugins",
+  "description": "A small shelf of Claude Code plugins for technical work. Currently home to gossip-girl, which turns tech news into decision-ready briefings in a signature narrator voice.",
   "owner": {
     "name": "Naomi"
   },
