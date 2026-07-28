@@ -84,13 +84,25 @@ Then invoke it:
 /gossip-girl:brief this week in AI agents
 ```
 
-### Option B — install from a marketplace
+### Option B — install from this repo (it is its own marketplace)
 
-Once the plugin is hosted (your own marketplace repo, or the community catalog), users install it with:
+This repo ships a `.claude-plugin/marketplace.json`, so once it is on GitHub, anyone can add it as a marketplace and install directly. Replace `USERNAME` with the GitHub account hosting it:
 
 ```bash
-/plugin marketplace add <your-repo-or-anthropics/claude-plugins-community>
-/plugin install gossip-girl@<marketplace-name>
+/plugin marketplace add USERNAME/gossip-girl
+/plugin install gossip-girl@naomi-plugins
+/reload-plugins
+```
+
+`naomi-plugins` is the marketplace name; `gossip-girl` is the plugin. Users refresh to your latest with `/plugin marketplace update naomi-plugins`.
+
+### Option C — install from the community catalog
+
+If accepted into Anthropic's community marketplace:
+
+```bash
+/plugin marketplace add anthropics/claude-plugins-community
+/plugin install gossip-girl@claude-community
 /reload-plugins
 ```
 

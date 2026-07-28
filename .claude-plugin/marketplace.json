@@ -1,0 +1,13 @@
+{
+  "name": "naomi-plugins",
+  "owner": {
+    "name": "Naomi"
+  },
+  "plugins": [
+    {
+      "name": "gossip-girl",
+      "source": "./",
+      "description": "Turns technical news into decision-ready briefings in the voice of the Gossip Girl narrator, without sacrificing accuracy."
+    }
+  ]
+}
