@@ -70,7 +70,7 @@ The invocation name comes from the layout: plugin `gossip-girl` + skill folder `
 
 ## Install
 
-### Option A — try it locally (no marketplace)
+### Option A – try it locally (no marketplace)
 
 Clone the repo, then load it with `--plugin-dir`:
 
@@ -85,7 +85,7 @@ Then invoke it:
 /gossip-girl:brief this week in AI agents
 ```
 
-### Option B — install from this repo (it is its own marketplace)
+### Option B – install from this repo (it is its own marketplace)
 
 This repo ships a `.claude-plugin/marketplace.json`, so it doubles as its own marketplace. Add it and install directly:
 
@@ -97,9 +97,9 @@ This repo ships a `.claude-plugin/marketplace.json`, so it doubles as its own ma
 
 `naomi-plugins` is the marketplace name; `gossip-girl` is the plugin. Refresh to the latest version anytime with `/plugin marketplace update naomi-plugins`.
 
-### Option C — install from the community catalog
+### Option C – install from the community catalog
 
-If accepted into Anthropic's community marketplace:
+Not yet listed. If this plugin is accepted into Anthropic's community marketplace, it will also install with:
 
 ```bash
 /plugin marketplace add anthropics/claude-plugins-community
@@ -107,27 +107,39 @@ If accepted into Anthropic's community marketplace:
 /reload-plugins
 ```
 
+Until then, use Option A or B.
+
 The skill is both slash-invocable (`/gossip-girl:brief`) and model-invocable (Claude reaches for it automatically when a briefing fits the task). It works with or without an argument; with no input it asks for a topic or a paste-in.
 
 Restart any open Claude Code session, or run `/reload-plugins`, after installing. See [TESTING.md](TESTING.md) for a full test plan (core paths, edge-case probes, and how to verify the learning loop).
 
 ## Personalization (optional)
 
-`references/reader-interests.md` is the skill's memory of what a given reader keeps engaging with. It updates only from clear signals, and only records topics, never personal content.
+The plugin keeps a memory of the themes you keep engaging with, at `skills/brief/references/reader-interests.md`, and weights future briefings toward them. It updates only from clear signals, and records topics only, never personal content.
 
-**It is local to each install, and personal data cannot be committed.** The repo tracks only `reader-interests.example.md`, a cold-start template. On first run the skill copies it to `reader-interests.md`, the working file where real signals accumulate. That working file is listed in `.gitignore`, so it is never staged or committed, even if you later bulk-copy your live skill folder over the repo. Entries stay on your machine and never sync to other installs or back to the author.
+**Your interests stay on your machine.** The repo ships only `reader-interests.example.md`, an empty cold-start template. On first run the plugin copies it to `reader-interests.md`, where your signals accumulate locally. That working file is git-ignored, so it is never committed or shared. Nothing syncs to other installs or back to the author, and a fresh install starts blank.
 
-The upshot for maintainers: after the first publish, functional changes (`SKILL.md`, `voice.md`, the manifest, docs) are what get shared. Your learned interests are structurally excluded, not excluded by remembering to be careful.
+How it learns:
 
-- **In-conversation:** when the reader asks a follow-up, says "more of this," or clicks into an item, that theme's tally goes up.
-- **Other channels (opt-in):** if the reader asks, the skill can fold in what they forward, reply to, save, or react to (Gmail, Slack, bookmarks). This runs only when requested, reads only the channels named, stays read-only, and reports back what it learned so the reader can veto it. Connectors must already be authorized; the skill will not work around auth.
+- **In-conversation:** ask a follow-up, say "more of this," or click into an item, and that theme's tally goes up.
+- **Other channels (opt-in):** ask it to fold in what you forward, reply to, save, or react to (Gmail, Slack, bookmarks). This runs only when you request it, reads only the channels you name, stays read-only, and reports back what it recorded so you can veto it. Connectors must already be authorized; it will not work around auth.
+
+To wipe the memory and start over, delete `reader-interests.md`. The plugin recreates it from the template on the next run.
 
 Sources for triangulation deliberately span primary/official pages, financial press (Yahoo Finance, Bloomberg, TechCrunch, The Information) for money stories, and independent tech-media newsletters (Platformer, Newcomer, Stratechery, Import AI, The Batch, Axios Pro Rata) for framing.
+
+## A note on voice
+
+Built to run well on expressive models, since the register rewards a model that will commit to the conceit. If a run nails the substance but the voice reads flat, the fix is upstream: have the model study `skills/brief/references/voice.md` and the register section of `skills/brief/SKILL.md` before writing, rather than reaching for the voice mid-draft.
+
+## Forking and customizing
+
+The voice and the sourcing rules are both editable in place:
+
+- **Retune the voice:** edit `skills/brief/references/voice.md`, which holds the calibrated example lines the plugin studies before writing. Swap the Gossip Girl register for another and the machinery still works.
+- **Change the sourcing:** the triangulation protocol and the named outlet list live in `skills/brief/SKILL.md`.
+- **Before redistributing a fork,** confirm `reader-interests.md` is absent or blank so you are not shipping your own interest profile. It is git-ignored by default, so this normally takes care of itself.
 
 ## License
 
 MIT. See [LICENSE](LICENSE).
-
-## A note on voice
-
-Built to run well on expressive models (the register rewards a model that will commit to the conceit). If a run nails the substance but the voice reads flat, the fix is upstream: have the model study `references/voice.md` and the register section of `SKILL.md` before writing, rather than reaching for the voice mid-draft.
