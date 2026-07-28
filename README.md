@@ -72,9 +72,10 @@ The invocation name comes from the layout: plugin `gossip-girl` + skill folder `
 
 ### Option A — try it locally (no marketplace)
 
-From the directory that contains this repo:
+Clone the repo, then load it with `--plugin-dir`:
 
 ```bash
+git clone https://github.com/dot-naomi/gossip-girl.git
 claude --plugin-dir ./gossip-girl
 ```
 
@@ -86,15 +87,15 @@ Then invoke it:
 
 ### Option B — install from this repo (it is its own marketplace)
 
-This repo ships a `.claude-plugin/marketplace.json`, so once it is on GitHub, anyone can add it as a marketplace and install directly. Replace `USERNAME` with the GitHub account hosting it:
+This repo ships a `.claude-plugin/marketplace.json`, so it doubles as its own marketplace. Add it and install directly:
 
 ```bash
-/plugin marketplace add USERNAME/gossip-girl
+/plugin marketplace add dot-naomi/gossip-girl
 /plugin install gossip-girl@naomi-plugins
 /reload-plugins
 ```
 
-`naomi-plugins` is the marketplace name; `gossip-girl` is the plugin. Users refresh to your latest with `/plugin marketplace update naomi-plugins`.
+`naomi-plugins` is the marketplace name; `gossip-girl` is the plugin. Refresh to the latest version anytime with `/plugin marketplace update naomi-plugins`.
 
 ### Option C — install from the community catalog
 
