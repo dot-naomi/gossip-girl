@@ -91,11 +91,11 @@ This repo ships a `.claude-plugin/marketplace.json`, so it doubles as its own ma
 
 ```bash
 /plugin marketplace add dot-naomi/gossip-girl
-/plugin install gossip-girl@naomi-plugins
+/plugin install gossip-girl@ladybug-plugins
 /reload-plugins
 ```
 
-`naomi-plugins` is the marketplace name; `gossip-girl` is the plugin. Refresh to the latest version anytime with `/plugin marketplace update naomi-plugins`.
+`ladybug-plugins` is the marketplace name; `gossip-girl` is the plugin. Refresh to the latest version anytime with `/plugin marketplace update ladybug-plugins`.
 
 ### Option C – install from the community catalog
 
